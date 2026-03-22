@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wit & Wisdom - A Jane Austen Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="paper-overlay"></div>
+
+  <!-- ═══════════════════════════════════════════
+       LANDING SCREEN
+  ══════════════════════════════════════════════ -->
+  <div class="landing" id="landing">
+    <div class="landing-bg-text">AUSTEN</div>
+
+    <!-- HERO ─────────────────────────────────── -->
+    <section class="landing-hero">
+      <div class="landing-crest">❧</div>
+      <h1 class="landing-title">Wit <span class="amp">&amp;</span> Wisdom</h1>
+      <p class="landing-subtitle">A Jane Austen Literary Intelligence</p>
+      <div class="hero-rule"><span>✦</span></div>
+      <blockquote class="hero-quote">
+        &ldquo;She was a great reader and had the happiness of her library to console her.&rdquo;
+      </blockquote>
+      <button class="enter-btn" id="enterBtn">
+        <span>Begin Your Enquiry</span>
+        <span class="enter-arrow">&#8594;</span>
+      </button>
+      <p class="landing-tech">Llama&nbsp;3 &nbsp;&middot;&nbsp; ChromaDB &nbsp;&middot;&nbsp; LangChain &nbsp;&middot;&nbsp; FastAPI</p>
+    </section>
+
+    <!-- ABOUT ────────────────────────────────── -->
+    <section class="landing-about">
+
+      <div class="about-row" style="--delay:0.05s">
+        <div class="about-num">01</div>
+        <div class="about-content">
+          <h3 class="about-title">What it is</h3>
+          <p class="about-body">
+            Wit &amp; Wisdom is a conversational AI companion trained on all six of Jane Austen&rsquo;s
+            major novels. Ask about characters, themes, plot, relationships, or society,
+            and receive answers grounded directly in Austen&rsquo;s own words.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-divider">⸻</div>
+
+      <div class="about-row" style="--delay:0.15s">
+        <div class="about-num">02</div>
+        <div class="about-content">
+          <h3 class="about-title">How it works</h3>
+          <p class="about-body">
+            Powered by <strong>Retrieval-Augmented Generation (RAG)</strong>, all six novels are
+            split into thousands of passages and stored as semantic vectors in ChromaDB.
+            When you ask a question, the most relevant passages are retrieved and handed
+            to a local Llama&nbsp;3 model, which crafts a faithful, cited response.
+            No data ever leaves your machine.
+          </p>
+          <div class="rag-steps">
+            <div class="rag-step"><span class="rag-arrow">→</span> Your question is embedded into a vector</div>
+            <div class="rag-step"><span class="rag-arrow">→</span> ChromaDB finds the closest novel passages</div>
+            <div class="rag-step"><span class="rag-arrow">→</span> Llama 3 answers from those passages only</div>
+            <div class="rag-step"><span class="rag-arrow">→</span> Sources are cited in every response</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-divider">⸻</div>
+
+      <div class="about-row" style="--delay:0.25s">
+        <div class="about-num">03</div>
+        <div class="about-content">
+          <h3 class="about-title">The Works</h3>
+          <div class="works-grid">
+            <div class="work-item"><span class="work-num">I</span><em>Pride &amp; Prejudice</em></div>
+            <div class="work-item"><span class="work-num">II</span><em>Sense &amp; Sensibility</em></div>
+            <div class="work-item"><span class="work-num">III</span><em>Emma</em></div>
+            <div class="work-item"><span class="work-num">IV</span><em>Persuasion</em></div>
+            <div class="work-item"><span class="work-num">V</span><em>Northanger Abbey</em></div>
+            <div class="work-item"><span class="work-num">VI</span><em>Mansfield Park</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-cta">
+        <button class="enter-btn-sm" id="enterBtn2">
+          <span>Enter Wit &amp; Wisdom</span>
+          <span class="enter-arrow">&#8594;</span>
+        </button>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CHAT APP
+  ══════════════════════════════════════════════ -->
+  <div class="app hidden" id="app">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="crest">❧</div>
+        <h1 class="brand">Wit <span class="amp-sm">&amp;</span><br/>Wisdom</h1>
+        <p class="brand-sub">A Jane Austen<br/>Literary Intelligence</p>
+      </div>
+
+      <div class="divider-ornament">&#8943; &#10022; &#8943;</div>
+
+      <div class="novels-list">
+        <p class="nav-label">The Works</p>
+        <div class="novel-tag">Pride &amp; Prejudice</div>
+        <div class="novel-tag">Sense &amp; Sensibility</div>
+        <div class="novel-tag">Emma</div>
+        <div class="novel-tag">Persuasion</div>
+        <div class="novel-tag">Northanger Abbey</div>
+        <div class="novel-tag">Mansfield Park</div>
+      </div>
+
+      <div class="divider-ornament">&#8943; &#10022; &#8943;</div>
+
+      <div class="character-switcher">
+        <p class="nav-label">Speak With</p>
+        <button class="char-btn active" data-character="austen">
+          <span class="char-icon">✦</span>
+          <span class="char-info">
+            <span class="char-name">The Narrator</span>
+            <span class="char-desc">Austen's voice - witty &amp; observant</span>
+          </span>
+        </button>
+        <button class="char-btn" data-character="darcy">
+          <span class="char-icon">⬥</span>
+          <span class="char-info">
+            <span class="char-name">Mr. Darcy</span>
+            <span class="char-desc">Formal, restrained, curt</span>
+          </span>
+        </button>
+        <button class="char-btn" data-character="emma">
+          <span class="char-icon">❋</span>
+          <span class="char-info">
+            <span class="char-name">Emma Woodhouse</span>
+            <span class="char-desc">Confident, opinionated, bold</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="divider-ornament">&#8943; &#10022; &#8943;</div>
+
+      <nav class="suggested-questions">
+        <p class="nav-label">Suggested Enquiries</p>
+        <button class="suggestion-btn" data-q="What is Mr. Darcy's character like in Pride and Prejudice?">On the character of Mr. Darcy</button>
+        <button class="suggestion-btn" data-q="How does Emma Woodhouse grow as a person throughout Emma?">Emma Woodhouse&rsquo;s growth</button>
+        <button class="suggestion-btn" data-q="Compare the themes of sense and sensibility across Austen's novels">Sense vs. sensibility across the novels</button>
+        <button class="suggestion-btn" data-q="What is the role of marriage in Jane Austen's works?">Marriage in Austen&rsquo;s world</button>
+        <button class="suggestion-btn" data-q="How does Austen use irony and wit across her novels?">Austen&rsquo;s wit &amp; irony</button>
+        <button class="suggestion-btn" data-q="What is Fanny Price's role in Mansfield Park?">Fanny Price in Mansfield Park</button>
+      </nav>
+
+      <div class="divider-ornament">&#8943; &#10022; &#8943;</div>
+
+      <div class="sidebar-footer">
+        <button class="about-btn" id="aboutBtn">&#8592; Back to Introduction</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="chat-header">
+        <div class="header-ornament">&#10022;</div>
+        <div class="chat-header-center">
+          <h2 class="chat-title">A Conversation Across Austen's Works</h2>
+          <div class="active-character-badge" id="activeCharBadge">
+            <span class="active-char-dot"></span>
+            <span id="activeCharLabel">The Narrator</span>
+          </div>
+        </div>
+        <div class="header-ornament">&#10022;</div>
+      </header>
+
+      <div class="messages" id="messages">
+        <div class="message bot-message welcome-message">
+          <div class="message-avatar">W</div>
+          <div class="message-body">
+            <div class="message-sender">Wit &amp; Wisdom</div>
+            <div class="message-text">
+              <p>Good day, dear reader. I am intimately acquainted with all six of Jane Austen&rsquo;s major novels: from the drawing rooms of <em>Pride and Prejudice</em> to the seaside melancholy of <em>Persuasion</em>, the Gothic whimsy of <em>Northanger Abbey</em>, and the moral intricacies of <em>Mansfield Park</em>.</p>
+              <p>Ask me of characters, themes, plot, or the society Austen so keenly observed. I shall answer with fidelity to the text, and cite my sources as any good scholar ought.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea id="userInput" class="chat-input" placeholder="Enquire of any novel, character, or theme&hellip;" rows="1"></textarea>
+          <button class="send-btn" id="sendBtn" title="Send">
+            <span class="send-icon">&#10230;</span>
+          </button>
+        </div>
+        <p class="input-hint">Answers grounded in all six novels via RAG &nbsp;&middot;&nbsp; Powered by Llama&nbsp;3 &amp; ChromaDB &nbsp;&middot;&nbsp; Sources cited per passage</p>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

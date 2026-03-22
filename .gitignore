@@ -1,0 +1,15 @@
+# Python
+pnpvenv/
+__pycache__/
+*.pyc
+.env
+
+# Vector store (too large for GitHub)
+backend/chroma_db/
+
+# Downloaded novels (public domain but large)
+backend/data/
+
+# OS
+.DS_Store
+Thumbs.db
